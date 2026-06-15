@@ -1,0 +1,333 @@
+/* ==========================================================================
+   STYLY WEBU ÚNIKOVEK
+   ========================================================================== */
+
+:root {
+  --pozadi-1: #312e81;
+  --pozadi-2: #1e1b4b;
+  --karta: #ffffff;
+  --text: #1f2937;
+  --text-svetly: #6b7280;
+  --akcent: #6366f1;
+  --akcent-tmavy: #4f46e5;
+  --zelena: #22c55e;
+  --zelena-svetla: #dcfce7;
+  --zelena-tmava: #15803d;
+  --cervena: #ef4444;
+  --cervena-svetla: #fee2e2;
+  --stin: 0 10px 25px rgba(0, 0, 0, 0.12);
+  --radius: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--text);
+  background: radial-gradient(
+      1200px 600px at 50% -10%,
+      #4338ca 0%,
+      transparent 60%
+    ),
+    linear-gradient(160deg, var(--pozadi-1), var(--pozadi-2));
+  min-height: 100vh;
+  background-attachment: fixed;
+}
+
+/* --- Hlavička ------------------------------------------------------------ */
+.hlavicka {
+  text-align: center;
+  color: #fff;
+  padding: 3rem 1.25rem 1rem;
+}
+
+.hlavicka h1 {
+  font-family: "Baloo 2", "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin: 0 0 0.4rem;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+.podnadpis {
+  margin: 0;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  opacity: 0.92;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 2rem;
+}
+
+/* --- Třída --------------------------------------------------------------- */
+.trida {
+  margin: 2rem 0;
+}
+
+.hlavicka-tridy {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.nazev-tridy {
+  font-family: "Baloo 2", "Nunito", sans-serif;
+  color: #fff;
+  font-size: clamp(1.3rem, 3.5vw, 1.9rem);
+  margin: 0;
+  padding: 0.35rem 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+
+/* --- Mřížka únikovek ----------------------------------------------------- */
+.mrizka {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+/* --- Karta únikovky ------------------------------------------------------ */
+.karta {
+  background: var(--karta);
+  border-radius: var(--radius);
+  box-shadow: var(--stin);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 3px solid transparent;
+  transition: border-color 0.3s ease, transform 0.2s ease;
+}
+
+.karta.dokonceno {
+  border-color: var(--zelena);
+}
+
+.karta-hlavicka {
+  position: relative;
+  padding-right: 4.5rem;
+}
+
+.nazev-unikovky {
+  font-family: "Baloo 2", "Nunito", sans-serif;
+  font-size: 1.3rem;
+  margin: 0 0 0.25rem;
+  color: var(--text);
+}
+
+.popis {
+  margin: 0;
+  color: var(--text-svetly);
+  font-size: 0.95rem;
+}
+
+.odznak {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #f3f4f6;
+  color: var(--text-svetly);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.odznak.hotovo {
+  background: var(--zelena-svetla);
+  color: var(--zelena-tmava);
+}
+
+/* --- Seznam zámků -------------------------------------------------------- */
+.zamky {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.zamek-radek {
+  position: relative;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  background: #f9fafb;
+  border: 2px solid #eef0f4;
+  border-radius: 14px;
+  padding: 0.75rem;
+  overflow: hidden;
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+
+.zamek-radek.odemknuto {
+  background: var(--zelena-svetla);
+  border-color: var(--zelena);
+}
+
+.zamek-ikona {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.zamek-radek.odemknuto .zamek-ikona {
+  transform: scale(1.15);
+  animation: poskoceni 0.5s ease;
+}
+
+.zamek-stred {
+  flex: 1;
+  min-width: 0;
+}
+
+.zamek-nazev {
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+  font-size: 0.98rem;
+}
+
+.zamek-radek.odemknuto .zamek-nazev {
+  color: var(--zelena-tmava);
+}
+
+/* --- Formulář pro kód ---------------------------------------------------- */
+.form-kod {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.vstup-kod {
+  flex: 1;
+  min-width: 0;
+  padding: 0.55rem 0.75rem;
+  border: 2px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.vstup-kod:focus {
+  border-color: var(--akcent);
+}
+
+.tlacitko {
+  background: var(--akcent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.55rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.tlacitko:hover:not(:disabled) {
+  background: var(--akcent-tmavy);
+}
+
+.tlacitko:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.tlacitko:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.zamek-radek.odemknuto .tlacitko {
+  background: var(--zelena);
+}
+
+/* --- Stavové hlášky ------------------------------------------------------ */
+.stav {
+  margin: 0.4rem 0 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  min-height: 1.1em;
+}
+
+.stav.uspech {
+  color: var(--zelena-tmava);
+}
+
+.stav.chyba {
+  color: var(--cervena);
+}
+
+/* --- Patička ------------------------------------------------------------- */
+.paticka {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 1.5rem 1rem 2.5rem;
+  font-size: 0.95rem;
+}
+
+/* --- Animace ------------------------------------------------------------- */
+@keyframes poskoceni {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.35) rotate(-8deg); }
+  100% { transform: scale(1.15); }
+}
+
+.zatreseni {
+  animation: zatreseni 0.4s ease;
+}
+
+@keyframes zatreseni {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-7px); }
+  40%, 80% { transform: translateX(7px); }
+}
+
+/* Konfety */
+.konfeta {
+  position: absolute;
+  top: -10px;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  pointer-events: none;
+  animation: padani 1.3s ease-in forwards;
+}
+
+@keyframes padani {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(160px) rotate(540deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- Menší obrazovky ----------------------------------------------------- */
+@media (max-width: 420px) {
+  .form-kod {
+    flex-direction: column;
+  }
+  .tlacitko {
+    width: 100%;
+  }
+}
