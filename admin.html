@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Generátor kódů – únikovky</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <style>
+      .panel {
+        background: #fff;
+        max-width: 680px;
+        margin: 2rem auto;
+        padding: 1.75rem;
+        border-radius: var(--radius);
+        box-shadow: var(--stin);
+      }
+      .panel h2 {
+        font-family: "Baloo 2", "Nunito", sans-serif;
+        margin-top: 0;
+      }
+      .panel p {
+        color: var(--text-svetly);
+      }
+      .radek {
+        display: flex;
+        gap: 0.5rem;
+        margin: 1rem 0;
+      }
+      .radek input {
+        flex: 1;
+      }
+      .vysledek {
+        background: #f3f4f6;
+        border-radius: 12px;
+        padding: 1rem;
+        word-break: break-all;
+        font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.9rem;
+        min-height: 1.2em;
+      }
+      .vysledek.prazdny {
+        color: var(--text-svetly);
+        font-style: italic;
+      }
+      .navod {
+        background: #eef2ff;
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        font-size: 0.95rem;
+        color: var(--text);
+      }
+      .navod code {
+        background: #fff;
+        padding: 0.1rem 0.35rem;
+        border-radius: 5px;
+      }
+      .zpet {
+        display: inline-block;
+        margin-top: 1rem;
+        color: var(--akcent);
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .kopirovano {
+        color: var(--zelena-tmava);
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-left: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hlavicka">
+      <h1>🔧 Generátor kódů</h1>
+      <p class="podnadpis">Nástroj pro paní učitelku – tady vyrobíte „hash“ kódu.</p>
+    </header>
+
+    <main>
+      <div class="panel">
+        <h2>1) Napište kód</h2>
+        <p>
+          Velká a malá písmena ani mezery na okrajích nevadí – kód se vždy upraví
+          stejně jako při zadávání žákem.
+        </p>
+        <div class="radek">
+          <input
+            id="kod"
+            class="vstup-kod"
+            type="text"
+            placeholder="Např. KNIHA123"
+            autocomplete="off"
+          />
+        </div>
+
+        <h2>2) Zkopírujte hash</h2>
+        <div id="vysledek" class="vysledek prazdny">
+          Hash se zobrazí tady…
+        </div>
+        <div class="radek">
+          <button id="kopirovat" class="tlacitko" type="button">
+            Zkopírovat hash
+          </button>
+          <span id="kopirovano" class="kopirovano" hidden>✅ Zkopírováno</span>
+        </div>
+
+        <h2>3) Vložte do souboru data.js</h2>
+        <div class="navod">
+          Otevřete soubor <code>js/data.js</code> a u příslušného zámku vložte
+          hash do políčka <code>hash: "...sem..."</code>. Pro přehled si k němu
+          můžete (nepovinně) napsat komentář s kódem, např.
+          <code>// kód: KNIHA123</code>.
+        </div>
+
+        <a class="zpet" href="index.html">← Zpět na únikovky</a>
+      </div>
+    </main>
+
+    <script src="js/hash.js"></script>
+    <script>
+      const kod = document.getElementById("kod");
+      const vysledek = document.getElementById("vysledek");
+      const kopirovat = document.getElementById("kopirovat");
+      const kopirovano = document.getElementById("kopirovano");
+
+      async function prepocti() {
+        const hodnota = kod.value;
+        if (!hodnota.trim()) {
+          vysledek.textContent = "Hash se zobrazí tady…";
+          vysledek.classList.add("prazdny");
+          return;
+        }
+        vysledek.textContent = await vypocitejHash(hodnota);
+        vysledek.classList.remove("prazdny");
+      }
+
+      kod.addEventListener("input", () => {
+        kopirovano.hidden = true;
+        prepocti();
+      });
+
+      kopirovat.addEventListener("click", async () => {
+        if (vysledek.classList.contains("prazdny")) return;
+        try {
+          await navigator.clipboard.writeText(vysledek.textContent.trim());
+          kopirovano.hidden = false;
+        } catch (e) {
+          // Záloha: označení textu, pokud schránka není dostupná
+          const r = document.createRange();
+          r.selectNodeContents(vysledek);
+          const s = window.getSelection();
+          s.removeAllRanges();
+          s.addRange(r);
+        }
+      });
+    </script>
+  </body>
+</html>
