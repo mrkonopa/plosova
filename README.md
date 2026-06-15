@@ -9,21 +9,31 @@ GitHub Pages.
 
 ## Jak to funguje pro žáky
 
-1. Žák si najde svoji **třídu** a **únikovku**.
-2. U každého zámku zadá kód a klikne na **Odemknout**.
-3. Při správném kódu se zámek **odemkne, zezelená** a objeví se konfety. 🎉
-4. Odemčené zámky zůstanou zelené i po obnovení stránky (uloženo v prohlížeči).
+1. Na **úvodní stránce** si žák najde svoji **třídu** a klikne na **únikovku**
+   (např. „Elektřina").
+2. Otevře se **stránka únikovky**, kde teprve zadává kódy k jejím zámkům.
+3. U každého zámku zadá kód a klikne na **Odemknout**.
+4. Při správném kódu se zámek **odemkne, zezelená** a objeví se konfety. 🎉
+   Nahoře se plní ukazatel postupu (např. „Odemčeno 3 ze 7 zámků").
+5. Odemčené zámky zůstanou zelené i po obnovení stránky (uloženo v prohlížeči).
 
 ## Soubory
 
-| Soubor / složka  | K čemu slouží                                                        |
-| ---------------- | ------------------------------------------------------------------- |
-| `index.html`     | Hlavní stránka pro žáky                                              |
-| `admin.html`     | **Nástroj pro učitelku** – vyrobí „hash“ kódu                       |
-| `js/data.js`     | **Obsah webu** – třídy, únikovky a zámky (tady se vše upravuje)      |
-| `js/hash.js`     | Šifrování kódů (neupravuje se)                                       |
-| `js/app.js`      | Logika stránky (neupravuje se)                                       |
-| `css/styles.css` | Vzhled                                                               |
+| Soubor / složka   | K čemu slouží                                                       |
+| ----------------- | ------------------------------------------------------------------ |
+| `index.html`      | Úvodní stránka – třídy a názvy únikovek (odkazy)                    |
+| `unikovka.html`   | Stránka jedné únikovky – zde žák zadává kódy zámků                  |
+| `admin.html`      | **Nástroj pro učitelku** – vyrobí „hash" kódu                       |
+| `js/data.js`      | **Obsah webu** – třídy, únikovky a zámky (tady se vše upravuje)     |
+| `js/common.js`    | Společné funkce (neupravuje se)                                     |
+| `js/hash.js`      | Šifrování kódů (neupravuje se)                                      |
+| `js/index.js`     | Logika úvodní stránky (neupravuje se)                               |
+| `js/unikovka.js`  | Logika stránky únikovky (neupravuje se)                             |
+| `css/styles.css`  | Vzhled                                                              |
+
+> Adresa stránky únikovky vzniká automaticky z názvu, např.
+> `unikovka.html?u=6-a-elektrina`. Učitelka nemusí nic nastavovat – odkazy se
+> tvoří samy. Konkrétní únikovce tak jde poslat i přímý odkaz.
 
 ## Jak přidat / upravit únikovku nebo zámek
 
