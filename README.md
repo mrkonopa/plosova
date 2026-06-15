@@ -78,10 +78,19 @@ python3 -m http.server 8000
 
 ## Zveřejnění zdarma (GitHub Pages)
 
-1. Nahrajte projekt do GitHub repozitáře.
-2. V repozitáři: **Settings → Pages → Build and deployment → Branch**: zvolte
-   větev a složku `/ (root)` a uložte.
-3. Za chvíli web poběží na adrese `https://<uzivatel>.github.io/<repozitar>/`.
+Web se zveřejňuje **automaticky** přes GitHub Actions. O nasazení se stará
+soubor `.github/workflows/deploy-pages.yml`: při každém pushi do větve `main`
+se web znovu nasadí (workflow si Pages i sám zapne).
+
+Živá adresa: **https://mrkonopa.github.io/plosova/**
+
+### Jak vydat změnu
+1. Upravte obsah (nejčastěji `js/data.js`).
+2. Změnu pošlete do větve `main` (přímo, nebo přes pull request a jeho sloučení).
+3. Po doběhnutí workflow (záložka **Actions**) se nová verze objeví na adrese výše.
+
+> Pozn.: Pokud by automatické zapnutí Pages selhalo, lze je jednou ručně zapnout
+> v **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 ## Vzorové kódy (k vyzkoušení)
 
