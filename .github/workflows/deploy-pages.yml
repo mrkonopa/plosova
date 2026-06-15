@@ -1,0 +1,41 @@
+name: Deploy GitHub Pages
+
+# Zveřejní statický web na GitHub Pages při každém pushi do větve main.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Najednou poběží jen jeden deploy; rozběhnutý se neruší.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Stažení repozitáře
+        uses: actions/checkout@v4
+
+      - name: Nastavení Pages (zapne Pages, pokud ještě nejsou)
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Nahrání obsahu webu
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy na GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
