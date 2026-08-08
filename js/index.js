@@ -18,22 +18,20 @@
     odkaz.href = "unikovka.html?u=" + encodeURIComponent(slug);
     if (vse) odkaz.classList.add("dokonceno");
 
-    const ikona = el("span", "unikovka-ikona");
-    ikona.setAttribute("aria-hidden", "true");
-    ikona.textContent = vse ? "✅" : "🧩";
+    const znak = el("span", "unikovka-ikona");
+    znak.appendChild(ikona(vse ? "hotovo" : unikovka.symbol || "zamek", 20));
 
     const stred = el("div", "unikovka-stred");
     stred.appendChild(el("span", "unikovka-nazev", unikovka.nazev));
     if (unikovka.popis) stred.appendChild(el("span", "unikovka-popis", unikovka.popis));
 
-    const odznak = el("span", "odznak");
-    odznak.textContent = "🔓 " + hotovo + " / " + pocetZamku;
+    const odznak = el("span", "odznak", hotovo + " / " + pocetZamku);
     if (vse) odznak.classList.add("hotovo");
 
     const sipka = el("span", "sipka", "›");
     sipka.setAttribute("aria-hidden", "true");
 
-    odkaz.appendChild(ikona);
+    odkaz.appendChild(znak);
     odkaz.appendChild(stred);
     odkaz.appendChild(odznak);
     odkaz.appendChild(sipka);
@@ -57,17 +55,24 @@
       const sekce = el("section", "trida");
 
       const hlavicka = el("div", "hlavicka-tridy");
-      const nazev = el("h2", "nazev-tridy");
-      nazev.textContent = (trida.emoji ? trida.emoji + " " : "") + trida.nazev;
-      hlavicka.appendChild(nazev);
+      const znak = el("span", "znak-tridy");
+      znak.appendChild(ikona(trida.symbol || "mereni", 20));
+      hlavicka.appendChild(znak);
+      hlavicka.appendChild(el("h2", "nazev-tridy", trida.nazev));
       sekce.appendChild(hlavicka);
 
       const seznam = el("div", "seznam-unikovek");
-      trida.unikovky.forEach(function (unikovka) {
-        seznam.appendChild(vytvorOdkazUnikovky(trida, unikovka));
-      });
-      sekce.appendChild(seznam);
+      const unikovky = trida.unikovky || [];
 
+      if (unikovky.length === 0) {
+        seznam.appendChild(el("div", "prazdno", "Zatím prázdné – zde se objeví únikovky."));
+      } else {
+        unikovky.forEach(function (unikovka) {
+          seznam.appendChild(vytvorOdkazUnikovky(trida, unikovka));
+        });
+      }
+
+      sekce.appendChild(seznam);
       obal.appendChild(sekce);
     });
   }
