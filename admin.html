@@ -3,115 +3,66 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Generátor kódů – únikovky</title>
+    <title>Generátor otisků – únikovky</title>
+    <meta name="description" content="Nástroj pro vytvoření otisku kódu." />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/styles.css" />
-    <style>
-      .panel {
-        background: #fff;
-        max-width: 680px;
-        margin: 2rem auto;
-        padding: 1.75rem;
-        border-radius: var(--radius);
-        box-shadow: var(--stin);
-      }
-      .panel h2 {
-        font-family: "Baloo 2", "Nunito", sans-serif;
-        margin-top: 0;
-      }
-      .panel p {
-        color: var(--text-svetly);
-      }
-      .radek {
-        display: flex;
-        gap: 0.5rem;
-        margin: 1rem 0;
-      }
-      .radek input {
-        flex: 1;
-      }
-      .vysledek {
-        background: #f3f4f6;
-        border-radius: 12px;
-        padding: 1rem;
-        word-break: break-all;
-        font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-        font-size: 0.9rem;
-        min-height: 1.2em;
-      }
-      .vysledek.prazdny {
-        color: var(--text-svetly);
-        font-style: italic;
-      }
-      .navod {
-        background: #eef2ff;
-        border-radius: 12px;
-        padding: 1rem 1.25rem;
-        font-size: 0.95rem;
-        color: var(--text);
-      }
-      .navod code {
-        background: #fff;
-        padding: 0.1rem 0.35rem;
-        border-radius: 5px;
-      }
-      .zpet {
-        display: inline-block;
-        margin-top: 1rem;
-        color: var(--akcent);
-        font-weight: 700;
-        text-decoration: none;
-      }
-      .kopirovano {
-        color: var(--zelena-tmava);
-        font-weight: 700;
-        font-size: 0.85rem;
-        margin-left: 0.5rem;
-      }
-    </style>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e2570f' stroke-width='2'><circle cx='12' cy='12' r='5'/><path d='M1 12h6M17 12h6M12 7v10'/></svg>"
+    />
+    <meta name="robots" content="noindex" />
   </head>
   <body>
     <header class="hlavicka">
-      <h1>🔧 Generátor kódů</h1>
-      <p class="podnadpis">Nástroj pro paní učitelku – tady vyrobíte „hash“ kódu.</p>
+      <span class="hlavicka-znak"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M1 12h6M17 12h6M12 7v10"/></svg></span>
+      <div>
+        <h1>Generátor otisků kódů</h1>
+        <p class="podnadpis">Nástroj pro paní učitelku – tady se z kódu vyrobí otisk.</p>
+      </div>
     </header>
 
     <main>
       <div class="panel">
-        <h2>1) Napište kód</h2>
-        <p>
-          Velká a malá písmena ani mezery na okrajích nevadí – kód se vždy upraví
-          stejně jako při zadávání žákem.
+        <span class="stitek-neverejne">NEVEŘEJNÁ STRÁNKA</span>
+        <p class="navod">
+          Do webu se nikdy neukládá samotný kód, jen jeho otisk. Zpětně se
+          z otisku kód přečíst nedá, takže žáci ho ze stránky nezjistí.
         </p>
+
+        <h2>1 · Kód ze zámku</h2>
         <div class="radek">
           <input
             id="kod"
             class="vstup-kod"
             type="text"
-            placeholder="Např. KNIHA123"
+            placeholder="Např. OHM"
             autocomplete="off"
           />
         </div>
 
-        <h2>2) Zkopírujte hash</h2>
-        <div id="vysledek" class="vysledek prazdny">
-          Hash se zobrazí tady…
-        </div>
+        <h2>2 · Otisk</h2>
+        <div id="vysledek" class="vysledek prazdny">Otisk se zobrazí tady…</div>
         <div class="radek">
-          <button id="kopirovat" class="tlacitko" type="button">
-            Zkopírovat hash
-          </button>
-          <span id="kopirovano" class="kopirovano" hidden>✅ Zkopírováno</span>
+          <button id="kopirovat" class="tlacitko" type="button">Zkopírovat otisk</button>
+          <span id="kopirovano" class="kopirovano" hidden>Zkopírováno</span>
         </div>
 
-        <h2>3) Vložte do souboru data.js</h2>
+        <h2>3 · Vložit do dat</h2>
         <div class="navod">
           Otevřete soubor <code>js/data.js</code> a u příslušného zámku vložte
-          hash do políčka <code>hash: "...sem..."</code>. Pro přehled si k němu
-          můžete (nepovinně) napsat komentář s kódem, např.
-          <code>// kód: KNIHA123</code>.
+          otisk do políčka <code>hash: "...sem..."</code>. Velká a malá písmena
+          ani mezery na okrajích nevadí – kód se upraví stejně jako při zadávání
+          žákem.
         </div>
 
-        <a class="zpet" href="index.html">← Zpět na únikovky</a>
+        <div class="radek">
+          <a class="tlacitko-zpet" href="index.html">← Zpět na únikovky</a>
+        </div>
       </div>
     </main>
 
@@ -125,7 +76,7 @@
       async function prepocti() {
         const hodnota = kod.value;
         if (!hodnota.trim()) {
-          vysledek.textContent = "Hash se zobrazí tady…";
+          vysledek.textContent = "Otisk se zobrazí tady…";
           vysledek.classList.add("prazdny");
           return;
         }
@@ -144,7 +95,6 @@
           await navigator.clipboard.writeText(vysledek.textContent.trim());
           kopirovano.hidden = false;
         } catch (e) {
-          // Záloha: označení textu, pokud schránka není dostupná
           const r = document.createRange();
           r.selectNodeContents(vysledek);
           const s = window.getSelection();
