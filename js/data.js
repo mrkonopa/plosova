@@ -1,39 +1,48 @@
 /* ==========================================================================
-   DATA ÚNIKOVEK
+   DATA ÚNIKOVEK  ←  TADY SE UPRAVUJE CELÝ OBSAH WEBU
    --------------------------------------------------------------------------
-   Tady se upravuje OBSAH webu – třídy, únikovky a jejich ZÁMKY.
-   Nemusíte rozumět programování, stačí dodržet tvar zápisu níže.
+   Nemusíte rozumět programování, stačí dodržet tvar zápisu.
 
-   Struktura:
-     třída  ➜  únikovky  ➜  zámky
+   Struktura:   třída  ➜  únikovky  ➜  zámky
 
-   Každá ÚNIKOVKA má:
-     - nazev:  název únikovky
-     - popis:  krátký popisek (nepovinné)
-     - symbol: název značky (viz js/symboly.js), nepovinné
-     - zamky:  seznam zámků
+   ÚNIKOVKA:
+     nazev   – název únikovky (uvidí ho žáci na úvodní stránce)
+     popis   – krátký popisek (nepovinné)
+     symbol  – název značky, viz js/symboly.js (nepovinné)
+     zamky   – seznam zámků
 
-   Každý ZÁMEK = jedna aktivita:
-     - nazev:  název aktivity (např. "Měření odporu")
-     - symbol: název značky (nepovinné)
-     - hash:   OTISK kódu (NE samotný kód!)
+   ZÁMEK = jedna aktivita:
+     nazev   – název aktivity, např. "Měření odporu" (NEPOVINNÉ –
+               když se vynechá, žák uvidí "Zámek 1", "Zámek 2", ...)
+     symbol  – název značky (nepovinné)
+     otisk   – OTISK KÓDU. Nikdy sem nepište samotný kód!
 
-   JAK ZÍSKAT OTISK KÓDU?
-   Otevřete "admin.html" v prohlížeči, napište kód a zkopírujte
-   vygenerovaný otisk sem do políčka "hash".
+   ⚠ DŮLEŽITÉ: do souboru se píše jen OTISK, ne kód. Otisk vypadá takhle:
+     "v1$200000$1f3c...$9ab2..."
+   Ze stránky se z něj původní kód přečíst nedá, takže ho žáci v „zobrazit
+   zdroj kódu“ nenajdou.
+
+   JAK OTISK ZÍSKAT?
+   Otevřete v prohlížeči soubor "admin.html" (Dílna kódů). Vyplníte název
+   únikovky a kódy k jednotlivým zámkům a nástroj vypíše hotový blok, který
+   se sem jen zkopíruje mezi hranaté závorky "unikovky: [ ]".
 
    ---------------------------------------------------------------------------
-   VZOR – takhle vypadá jedna hotová únikovka (zkopírujte a upravte):
+   VZOR – takhle vypadá jedna hotová únikovka:
 
      {
-       nazev: "Název únikovky",
-       popis: "Krátký popisek pro žáky.",
+       nazev: "Elektrické obvody",
+       popis: "Projdi měřicí stanoviště a odemkni všechny zámky.",
        symbol: "obvod",
        zamky: [
-         { nazev: "Název aktivity", symbol: "mereni", hash: "sem vložit otisk" },
-         { nazev: "Název aktivity", symbol: "dilna",  hash: "sem vložit otisk" }
+         { nazev: "Měření odporu",    symbol: "mereni", otisk: "v1$200000$....$...." },
+         { nazev: "Napětí na zdroji", symbol: "sila",   otisk: "v1$200000$....$...." },
+         { nazev: "Proud v obvodu",   symbol: "magnet", otisk: "v1$200000$....$...." }
        ]
      }
+
+   Únikovek může být v jedné třídě víc – oddělují se čárkou:
+     unikovky: [ { ...první... }, { ...druhá... } ]
    ========================================================================== */
 
 const DATA_UNIKOVEK = {
@@ -44,22 +53,30 @@ const DATA_UNIKOVEK = {
     {
       nazev: "6. třída",
       symbol: "mereni",
-      unikovky: []
+      unikovky: [
+        // sem přijdou únikovky pro 6. třídu
+      ]
     },
     {
       nazev: "7. třída",
       symbol: "obvod",
-      unikovky: []
+      unikovky: [
+        // sem přijdou únikovky pro 7. třídu
+      ]
     },
     {
       nazev: "8. třída",
       symbol: "sila",
-      unikovky: []
+      unikovky: [
+        // sem přijdou únikovky pro 8. třídu
+      ]
     },
     {
       nazev: "9. třída",
       symbol: "optika",
-      unikovky: []
+      unikovky: [
+        // sem přijdou únikovky pro 9. třídu
+      ]
     }
   ]
 };

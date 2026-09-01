@@ -465,3 +465,90 @@ a:hover { color: #a83c05; }
 .navod code { background: #1e1710; padding: 0.1rem 0.35rem; border-radius: 5px; color: var(--papir); }
 .radek { display: flex; gap: 0.6rem; align-items: center; margin: 0.9rem 0; flex-wrap: wrap; }
 .kopirovano { font-family: "Space Mono", ui-monospace, monospace; font-size: 0.78rem; font-weight: 700; color: #57a877; }
+
+/* ---------- Dílna kódů: formulář únikovky ---------- */
+
+.mrizka {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.pole { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+.pole-siroke { grid-column: 1 / -1; }
+
+.pole > span {
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--seda-svetla);
+}
+
+.panel select.vstup-kod {
+  width: 100%;
+  background: #1e1710;
+  color: var(--papir);
+  border-color: #6b5c4c;
+  font-family: "Sora", system-ui, sans-serif;
+}
+
+.zamky-vstupy { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.7rem; }
+
+.zamek-vstup {
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.zamek-vstup .zamek-cislo { color: var(--seda-svetla); padding-top: 0; }
+.zamek-vstup .vstup-kod { width: 100%; }
+.zamek-vstup .vstup-tajny { color: var(--oranzova-svetla); font-weight: 700; }
+
+.posudek {
+  grid-column: 2 / -1;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: var(--oranzova-svetla);
+  min-height: 0.9rem;
+}
+
+.posudek:empty { display: none; }
+
+pre.vysledek {
+  margin: 0;
+  white-space: pre-wrap; /* dlouhé otisky se zalomí, nic se neschová */
+  overflow-wrap: anywhere;
+  word-break: normal;
+  color: var(--papir);
+}
+
+pre.vysledek.prazdny { color: var(--seda-svetla); font-style: italic; }
+pre.vysledek.chyba-vystup { color: #ff9f8a; border-color: var(--cervena); font-style: normal; }
+
+.kam {
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--seda-svetla);
+}
+
+.podnadpis code {
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.85em;
+  background: var(--papir-tmavsi);
+  padding: 0.1rem 0.3rem;
+  border-radius: 5px;
+}
+
+/* Zámek, u kterého v datech chybí otisk kódu. */
+.zamek-radek.bez-kodu { border-style: dashed; opacity: 0.75; }
+
+@media (max-width: 640px) {
+  .mrizka { grid-template-columns: minmax(0, 1fr); }
+  .zamek-vstup { grid-template-columns: 2.1rem minmax(0, 1fr); }
+  .zamek-vstup .vstup-tajny { grid-column: 2; }
+}
