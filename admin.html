@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Generátor otisků – únikovky</title>
-    <meta name="description" content="Nástroj pro vytvoření otisku kódu." />
+    <title>Dílna kódů – únikovky</title>
+    <meta name="description" content="Nástroj pro vytvoření otisků kódů celé únikovky." />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap"
@@ -19,10 +19,10 @@
   </head>
   <body>
     <header class="hlavicka">
-      <span class="hlavicka-znak"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M1 12h6M17 12h6M12 7v10"/></svg></span>
+      <span class="hlavicka-znak"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20 12 11M9 8l4-4 7 7-4 4z"/></svg></span>
       <div>
-        <h1>Generátor otisků kódů</h1>
-        <p class="podnadpis">Nástroj pro paní učitelku – tady se z kódu vyrobí otisk.</p>
+        <h1>Dílna kódů</h1>
+        <p class="podnadpis">Vyplňte únikovku a kódy – nástroj vyrobí hotový blok do <code>js/data.js</code>.</p>
       </div>
     </header>
 
@@ -30,34 +30,76 @@
       <div class="panel">
         <span class="stitek-neverejne">NEVEŘEJNÁ STRÁNKA</span>
         <p class="navod">
-          Do webu se nikdy neukládá samotný kód, jen jeho otisk. Zpětně se
-          z otisku kód přečíst nedá, takže žáci ho ze stránky nezjistí.
+          Na web se nikdy neukládá samotný kód, jen jeho <strong>otisk</strong>.
+          Zpětně se z otisku kód přečíst nedá – žáci ho ve zdrojovém kódu
+          stránky nenajdou. Kódy si proto <strong>uschovejte</strong>: web vám
+          je později připomenout neumí (krok 4 níže).
         </p>
 
-        <h2>1 · Kód ze zámku</h2>
-        <div class="radek">
-          <input
-            id="kod"
-            class="vstup-kod"
-            type="text"
-            placeholder="Např. OHM"
-            autocomplete="off"
-          />
+        <h2>1 · Únikovka</h2>
+        <div class="mrizka">
+          <label class="pole">
+            <span>Třída</span>
+            <select id="trida" class="vstup-kod">
+              <option>6. třída</option>
+              <option>7. třída</option>
+              <option>8. třída</option>
+              <option>9. třída</option>
+            </select>
+          </label>
+          <label class="pole">
+            <span>Značka únikovky</span>
+            <select id="symbol" class="vstup-kod"></select>
+          </label>
+          <label class="pole pole-siroke">
+            <span>Název únikovky</span>
+            <input id="nazev" class="vstup-kod" type="text" placeholder="Např. Elektrické obvody" autocomplete="off" />
+          </label>
+          <label class="pole pole-siroke">
+            <span>Popisek pro žáky (nepovinné)</span>
+            <input id="popis" class="vstup-kod" type="text" placeholder="Např. Projdi měřicí stanoviště a odemkni všechny zámky." autocomplete="off" />
+          </label>
         </div>
 
-        <h2>2 · Otisk</h2>
-        <div id="vysledek" class="vysledek prazdny">Otisk se zobrazí tady…</div>
+        <h2>2 · Zámky a jejich kódy</h2>
+        <div class="mrizka">
+          <label class="pole">
+            <span>Počet zámků</span>
+            <input id="pocet" class="vstup-kod" type="number" min="1" max="20" value="5" />
+          </label>
+        </div>
+        <p class="navod">
+          Název aktivity je nepovinný – když ho necháte prázdný, žák uvidí
+          „Zámek 1“, „Zámek 2“, … Na velikosti písmen, mezerách ani háčcích
+          v kódu nezáleží: <code>síla 12</code> i <code>SILA12</code> projde stejně.
+        </p>
+        <div id="zamky-obal" class="zamky-vstupy"></div>
+
+        <h2>3 · Hotový blok do js/data.js</h2>
         <div class="radek">
-          <button id="kopirovat" class="tlacitko" type="button">Zkopírovat otisk</button>
+          <button id="vyrobit" class="tlacitko" type="button">Vyrobit otisky</button>
+          <span id="kam" class="kam"></span>
+        </div>
+        <pre id="vystup" class="vysledek prazdny">Blok se zobrazí tady…</pre>
+        <div class="radek">
+          <button id="kopirovat" class="tlacitko" type="button" disabled>Zkopírovat blok</button>
           <span id="kopirovano" class="kopirovano" hidden>Zkopírováno</span>
         </div>
-
-        <h2>3 · Vložit do dat</h2>
         <div class="navod">
-          Otevřete soubor <code>js/data.js</code> a u příslušného zámku vložte
-          otisk do políčka <code>hash: "...sem..."</code>. Velká a malá písmena
-          ani mezery na okrajích nevadí – kód se upraví stejně jako při zadávání
-          žákem.
+          Otevřete <code>js/data.js</code>, najděte svoji třídu a blok vložte
+          mezi hranaté závorky <code>unikovky: [ ]</code>. Když už tam jedna
+          únikovka je, oddělte je čárkou.
+        </div>
+
+        <h2>4 · Opis kódů pro vás</h2>
+        <p class="navod">
+          Tenhle seznam si uložte nebo vytiskněte – na webu už kódy nikde
+          nejsou a nepůjde je zjistit.
+        </p>
+        <pre id="opis" class="vysledek prazdny">Seznam kódů se zobrazí tady…</pre>
+        <div class="radek">
+          <button id="kopirovat-opis" class="tlacitko" type="button" disabled>Zkopírovat seznam kódů</button>
+          <span id="kopirovano-opis" class="kopirovano" hidden>Zkopírováno</span>
         </div>
 
         <div class="radek">
@@ -66,42 +108,206 @@
       </div>
     </main>
 
+    <script src="js/symboly.js"></script>
     <script src="js/hash.js"></script>
     <script>
-      const kod = document.getElementById("kod");
-      const vysledek = document.getElementById("vysledek");
-      const kopirovat = document.getElementById("kopirovat");
-      const kopirovano = document.getElementById("kopirovano");
+      (function () {
+        "use strict";
 
-      async function prepocti() {
-        const hodnota = kod.value;
-        if (!hodnota.trim()) {
-          vysledek.textContent = "Otisk se zobrazí tady…";
-          vysledek.classList.add("prazdny");
-          return;
+        const tridaEl = document.getElementById("trida");
+        const symbolEl = document.getElementById("symbol");
+        const nazevEl = document.getElementById("nazev");
+        const popisEl = document.getElementById("popis");
+        const pocetEl = document.getElementById("pocet");
+        const obalEl = document.getElementById("zamky-obal");
+        const vyrobitEl = document.getElementById("vyrobit");
+        const vystupEl = document.getElementById("vystup");
+        const opisEl = document.getElementById("opis");
+        const kamEl = document.getElementById("kam");
+
+        // Nabídka značek se bere přímo z js/symboly.js
+        Object.keys(SYMBOLY).forEach(function (jmeno) {
+          const o = document.createElement("option");
+          o.value = jmeno;
+          o.textContent = jmeno;
+          symbolEl.appendChild(o);
+        });
+        symbolEl.value = "obvod";
+
+        // --- Řádky zámků -----------------------------------------------------
+        function vykresliZamky() {
+          const pocet = Math.max(1, Math.min(20, parseInt(pocetEl.value, 10) || 1));
+          const stare = radkyHodnot();
+
+          obalEl.innerHTML = "";
+          for (let i = 0; i < pocet; i++) {
+            const radek = document.createElement("div");
+            radek.className = "zamek-vstup";
+
+            const cislo = document.createElement("span");
+            cislo.className = "zamek-cislo";
+            cislo.textContent = String(i + 1).padStart(2, "0");
+
+            const nazev = document.createElement("input");
+            nazev.className = "vstup-kod vstup-nazev";
+            nazev.type = "text";
+            nazev.placeholder = "Název aktivity (nepovinné)";
+            nazev.autocomplete = "off";
+            nazev.value = (stare[i] && stare[i].nazev) || "";
+
+            const kod = document.createElement("input");
+            kod.className = "vstup-kod vstup-tajny";
+            kod.type = "text";
+            kod.placeholder = "Kód, např. OHM472";
+            kod.autocomplete = "off";
+            kod.value = (stare[i] && stare[i].kod) || "";
+
+            const posudek = document.createElement("span");
+            posudek.className = "posudek";
+
+            kod.addEventListener("input", function () {
+              posudek.textContent = posudekKodu(kod.value);
+            });
+            posudek.textContent = posudekKodu(kod.value);
+
+            radek.appendChild(cislo);
+            radek.appendChild(nazev);
+            radek.appendChild(kod);
+            radek.appendChild(posudek);
+            obalEl.appendChild(radek);
+          }
         }
-        vysledek.textContent = await vypocitejHash(hodnota);
-        vysledek.classList.remove("prazdny");
-      }
 
-      kod.addEventListener("input", () => {
-        kopirovano.hidden = true;
-        prepocti();
-      });
-
-      kopirovat.addEventListener("click", async () => {
-        if (vysledek.classList.contains("prazdny")) return;
-        try {
-          await navigator.clipboard.writeText(vysledek.textContent.trim());
-          kopirovano.hidden = false;
-        } catch (e) {
-          const r = document.createRange();
-          r.selectNodeContents(vysledek);
-          const s = window.getSelection();
-          s.removeAllRanges();
-          s.addRange(r);
+        function radkyHodnot() {
+          return Array.from(obalEl.querySelectorAll(".zamek-vstup")).map(function (r) {
+            return {
+              nazev: r.querySelector(".vstup-nazev").value.trim(),
+              kod: r.querySelector(".vstup-tajny").value
+            };
+          });
         }
-      });
+
+        // Upozorní na kód, který by šlo snadno uhodnout.
+        function posudekKodu(kod) {
+          const cisty = normalizujKod(kod);
+          if (!cisty) return "";
+          if (cisty.length < 4) return "krátký kód – raději delší";
+          if (jeVidetNaStrance(cisty)) return "pozor: kód je vidět v názvu na stránce";
+          if (!/[0-9]/.test(cisty)) return "tip: přidejte i číslici";
+          return "";
+        }
+
+        // Kód schovaný v názvu únikovky nebo aktivity žák snadno uhodne –
+        // ten název má přece přímo před očima.
+        function jeVidetNaStrance(cistyKod) {
+          const nazvy = [nazevEl.value, popisEl.value].concat(
+            Array.from(obalEl.querySelectorAll(".vstup-nazev")).map(function (v) {
+              return v.value;
+            })
+          );
+          return nazvy.some(function (n) {
+            const cisty = normalizujKod(n);
+            return cisty.length > 0 && cisty.indexOf(cistyKod) !== -1;
+          });
+        }
+
+        // --- Vytvoření bloku -------------------------------------------------
+        function retezec(text) {
+          return '"' + String(text).replace(/\\/g, "\\\\").replace(/"/g, '\\"') + '"';
+        }
+
+        vyrobitEl.addEventListener("click", async function () {
+          const nazev = nazevEl.value.trim();
+          const zamky = radkyHodnot();
+          const vyplnene = zamky.filter(function (z) {
+            return normalizujKod(z.kod).length > 0;
+          });
+
+          if (!nazev) {
+            vystupEl.textContent = "Nejdřív vyplňte název únikovky (krok 1).";
+            vystupEl.className = "vysledek chyba-vystup";
+            return;
+          }
+          if (vyplnene.length !== zamky.length) {
+            vystupEl.textContent =
+              "U některého zámku chybí kód. Vyplňte kód u všech " + zamky.length + " zámků.";
+            vystupEl.className = "vysledek chyba-vystup";
+            return;
+          }
+
+          vyrobitEl.disabled = true;
+          vyrobitEl.textContent = "Počítám…";
+
+          const radky = [];
+          for (let i = 0; i < zamky.length; i++) {
+            const otisk = await vyrobOtisk(zamky[i].kod);
+            const casti = [];
+            if (zamky[i].nazev) casti.push("nazev: " + retezec(zamky[i].nazev));
+            casti.push("otisk: " + retezec(otisk));
+            radky.push("            { " + casti.join(", ") + " }");
+          }
+
+          // Odsazení je nastavené tak, aby blok v js/data.js pěkně zapadl.
+          const vlastnosti = ["          nazev: " + retezec(nazev)];
+          if (popisEl.value.trim()) vlastnosti.push("          popis: " + retezec(popisEl.value.trim()));
+          vlastnosti.push("          symbol: " + retezec(symbolEl.value));
+          vlastnosti.push("          zamky: [");
+
+          vystupEl.textContent =
+            "        {\n" +
+            vlastnosti.join(",\n") + "\n" +
+            radky.join(",\n") + "\n" +
+            "          ]\n" +
+            "        }";
+          vystupEl.className = "vysledek";
+          kamEl.textContent = "→ vložit do třídy: " + tridaEl.value;
+
+          opisEl.textContent = [
+            tridaEl.value + " – " + nazev,
+            "".padEnd(40, "-")
+          ]
+            .concat(
+              zamky.map(function (z, i) {
+                const jmeno = z.nazev || "Zámek " + (i + 1);
+                return String(i + 1).padStart(2, "0") + "  " + jmeno + "  →  " + z.kod.trim();
+              })
+            )
+            .join("\n");
+          opisEl.className = "vysledek";
+
+          document.getElementById("kopirovat").disabled = false;
+          document.getElementById("kopirovat-opis").disabled = false;
+          vyrobitEl.disabled = false;
+          vyrobitEl.textContent = "Vyrobit otisky";
+        });
+
+        // --- Kopírování ------------------------------------------------------
+        function nastavKopirovani(tlacitkoId, zdrojEl, hlaskaId) {
+          const tlacitko = document.getElementById(tlacitkoId);
+          const hlaska = document.getElementById(hlaskaId);
+          tlacitko.addEventListener("click", async function () {
+            try {
+              await navigator.clipboard.writeText(zdrojEl.textContent);
+              hlaska.hidden = false;
+              setTimeout(function () {
+                hlaska.hidden = true;
+              }, 2500);
+            } catch (e) {
+              const r = document.createRange();
+              r.selectNodeContents(zdrojEl);
+              const s = window.getSelection();
+              s.removeAllRanges();
+              s.addRange(r);
+            }
+          });
+        }
+
+        nastavKopirovani("kopirovat", vystupEl, "kopirovano");
+        nastavKopirovani("kopirovat-opis", opisEl, "kopirovano-opis");
+
+        pocetEl.addEventListener("input", vykresliZamky);
+        vykresliZamky();
+      })();
     </script>
   </body>
 </html>

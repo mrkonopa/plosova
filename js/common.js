@@ -12,7 +12,7 @@ const ULOZISTE_KLIC = "plosova-odemknute";
 function slugify(text) {
   return String(text)
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "") // odstraní diakritiku (kombinační znaky)
+    .replace(/[\u0300-\u036f]/g, "") // odstraní diakritiku (kombinační znaky)
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
@@ -40,16 +40,24 @@ function ulozOdemknute(stav) {
   }
 }
 
-function idZamku(tridaNazev, unikovkaNazev, zamekNazev) {
-  return tridaNazev + "::" + unikovkaNazev + "::" + zamekNazev;
+// Jednoznačný klíč jednoho zámku v paměti prohlížeče.
+// Zámek se pozná podle POŘADÍ (1, 2, 3, ...), ne podle názvu – zámky totiž
+// nemusí mít název vyplněný a přejmenování zámku nesmí smazat postup žáka.
+function idZamku(tridaNazev, unikovkaNazev, poradi) {
+  return slugUnikovky(tridaNazev, unikovkaNazev) + "::" + poradi;
 }
 
 // Kolik zámků dané únikovky je odemčených
 function pocetOdemcenych(tridaNazev, unikovka) {
   const odemknute = nactiOdemknute();
   return (unikovka.zamky || []).filter(
-    (z) => odemknute[idZamku(tridaNazev, unikovka.nazev, z.nazev)]
+    (z, i) => odemknute[idZamku(tridaNazev, unikovka.nazev, i + 1)]
   ).length;
+}
+
+// Otisk kódu u zámku (v datech se smí napsat "otisk:" i starší "hash:")
+function otiskZamku(zamek) {
+  return (zamek && (zamek.otisk || zamek.hash)) || "";
 }
 
 // --- Pomocná tvorba prvků --------------------------------------------------

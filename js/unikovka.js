@@ -22,9 +22,11 @@
   }
 
   function vytvorZamek(tridaNazev, unikovkaNazev, zamek, cislo, prepocti) {
-    const id = idZamku(tridaNazev, unikovkaNazev, zamek.nazev);
+    const id = idZamku(tridaNazev, unikovkaNazev, cislo);
     const jeOdemknuto = !!nactiOdemknute()[id];
     const nazevZamku = zamek.nazev || "Zámek " + cislo;
+    const otisk = otiskZamku(zamek);
+    const maKod = jeOtiskVyplneny(otisk);
 
     const radek = el("li", "zamek-radek");
     radek.dataset.id = id;
@@ -69,6 +71,14 @@
     if (jeOdemknuto) {
       stav.textContent = "Odemčeno";
       stav.className = "stav uspech";
+    } else if (!maKod) {
+      // Pojistka pro paní učitelku: u zámku chybí otisk kódu v js/data.js.
+      vstup.disabled = true;
+      tlacitko.disabled = true;
+      vstup.placeholder = "Kód zatím není nastavený";
+      stav.textContent = "Tenhle zámek ještě nemá nastavený kód.";
+      stav.className = "stav chyba";
+      radek.classList.add("bez-kodu");
     }
 
     form.addEventListener("submit", async function (ev) {
@@ -77,9 +87,15 @@
       if (!zadano.trim()) return;
 
       tlacitko.disabled = true;
-      const hash = await vypocitejHash(zadano);
+      const puvodniPopisek = tlacitko.textContent;
+      tlacitko.textContent = "Ověřuji…";
+      stav.textContent = "";
+      stav.className = "stav";
 
-      if (hash === zamek.hash) {
+      const sedi = await overKod(zadano, otisk);
+      tlacitko.textContent = puvodniPopisek;
+
+      if (sedi) {
         const ulozene = nactiOdemknute();
         ulozene[id] = true;
         ulozOdemknute(ulozene);
